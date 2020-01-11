@@ -29,7 +29,13 @@ Promise.all(urls.map(url => fetch(url).then(parseJSON))).then(data => {
     //console.log(data.indexOf(count));
     countsArray.push(count.count);
   });
-
+  /*
+  data.forEach(function(ind) {
+    console.log(ind.results[data.indexOf(ind)].name);
+    let item = document.createElement("li");
+    item.innerHTML
+  });
+ */
   data[0].results.forEach(function(result) {
     let character = document.createElement("li");
     character.innerHTML = `<b>${result.name}</b> born on ${result.birth_year}`;
@@ -96,10 +102,20 @@ async function updateList(event) {
   ) {
     await fetch(newUrl).then(response =>
       response.json().then(data =>
-        data.results.forEach(function(person) {
+        data.results.forEach(function(item) {
           //console.log(person.name);
           let character = document.createElement("li");
-          character.innerHTML = `<b>${person.name}</b> born on ${person.birth_year}`;
+          switch (buttonIndex) {
+            case 0:
+              character.innerHTML = `<b>${item.name}</b> born on ${item.birth_year}`;
+              break;
+            case 2:
+              character.innerHTML = `<b>${item.name}</b> built by ${item.manufacturer}`;
+              break;
+            case 3:
+              character.innerHTML = `<b>${item.name}</b> passenger capacity ${item.passengers}`;
+              break;
+          }
           listGrab[buttonIndex].appendChild(character);
         })
       )
